@@ -1,22 +1,19 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>HACKED BY ALZZ TEAM XNXX</title>
+    <title>YOU ARE AN IDIOT</title>
     <style>
         body {
-            background-color: #000;
-            color: #0f0;
+            background-color: black;
+            color: lime;
             font-family: 'Courier New', monospace;
             overflow: hidden;
             margin: 0;
             padding: 0;
-            position: relative;
-            height: 100vh;
         }
         #matrix {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -25,13 +22,12 @@
         }
         .snake {
             position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: #0f0;
-            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            background-color: red;
             z-index: 2;
         }
-        #message {
+        .message {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -39,7 +35,6 @@
             font-size: 48px;
             text-align: center;
             z-index: 3;
-            text-shadow: 0 0 10px #0f0;
             animation: pulse 1s infinite;
         }
         @keyframes pulse {
@@ -47,106 +42,109 @@
             50% { opacity: 1; }
             100% { opacity: 0.5; }
         }
-        #logo {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            z-index: 4;
-            font-size: 24px;
-            color: #ff0000;
-            text-shadow: 0 0 10px #ff0000;
-        }
-        #sound {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            z-index: 4;
+        audio {
+            display: none;
         }
     </style>
 </head>
 <body>
     <canvas id="matrix"></canvas>
-    <div class="snake" id="snake1"></div>
-    <div class="snake" id="snake2"></div>
-    <div id="message">HACKED BY ALZZ TEAM XNXX</div>
-    <div id="logo">XNXX TEAM</div>
-    <audio id="sound" autoplay loop>
-        <source src="idiot.mp3" type="audio/mpeg">
+    <div class="message">YOU ARE AN IDIOT</div>
+    <audio autoplay loop>
+        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
     </audio>
 
     <script>
-        // Matrix Animation
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
+
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
         const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*";
         const fontSize = 14;
         const columns = canvas.width / fontSize;
-        const drops = [];
 
+        const drops = [];
         for (let i = 0; i < columns; i++) {
             drops[i] = Math.random() * -100;
         }
 
-        function drawMatrix() {
+        function draw() {
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = '#00ff00';
+            ctx.fillStyle = '#0F0';
             ctx.font = `${fontSize}px monospace`;
 
             for (let i = 0; i < drops.length; i++) {
-                const text = chars[Math.floor(Math.random() * chars.length)];
+                const text = chars.charAt(Math.floor(Math.random() * chars.length));
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
                 if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                     drops[i] = 0;
                 }
+
                 drops[i]++;
             }
         }
 
-        setInterval(drawMatrix, 33);
+        setInterval(draw, 33);
 
         // Snake Animation
-        const snake1 = document.getElementById('snake1');
-        const snake2 = document.getElementById('snake2');
+        const snakeContainer = document.createElement('div');
+        snakeContainer.style.position = 'absolute';
+        snakeContainer.style.top = '0';
+        snakeContainer.style.left = '0';
+        snakeContainer.style.width = '100%';
+        snakeContainer.style.height = '100%';
+        snakeContainer.style.zIndex = '2';
+        document.body.appendChild(snakeContainer);
 
-        let posX1 = 0, posY1 = 0;
-        let posX2 = 0, posY2 = 0;
-        let dirX1 = 2, dirY1 = 2;
-        let dirX2 = -2, dirY2 = -2;
+        let snakeInterval;
+        function createSnake() {
+            const snake = document.createElement('div');
+            snake.className = 'snake';
+            snake.style.left = `${Math.random() * 100}%`;
+            snake.style.top = `${Math.random() * 100}%`;
+            snakeContainer.appendChild(snake);
 
-        function moveSnake() {
-            posX1 += dirX1;
-            posY1 += dirY1;
-            posX2 += dirX2;
-            posY2 += dirY2;
+            let posX = parseFloat(snake.style.left);
+            let posY = parseFloat(snake.style.top);
+            const directionX = (Math.random() - 0.5) * 4;
+            const directionY = (Math.random() - 0.5) * 4;
 
-            if (posX1 <= 0 || posX1 >= window.innerWidth - 20) dirX1 *= -1;
-            if (posY1 <= 0 || posY1 >= window.innerHeight - 20) dirY1 *= -1;
-            if (posX2 <= 0 || posX2 >= window.innerWidth - 20) dirX2 *= -1;
-            if (posY2 <= 0 || posY2 >= window.innerHeight - 20) dirY2 *= -1;
+            function moveSnake() {
+                posX += directionX;
+                posY += directionY;
 
-            snake1.style.left = posX1 + 'px';
-            snake1.style.top = posY1 + 'px';
-            snake2.style.left = posX2 + 'px';
-            snake2.style.top = posY2 + 'px';
+                if (posX < 0 || posX > 100) directionX *= -1;
+                if (posY < 0 || posY > 100) directionY *= -1;
 
-            requestAnimationFrame(moveSnake);
+                snake.style.left = `${posX}%`;
+                snake.style.top = `${posY}%`;
+
+                setTimeout(moveSnake, 50);
+            }
+
+            moveSnake();
         }
 
-        moveSnake();
+        snakeInterval = setInterval(createSnake, 500);
 
-        // Cyber Message
-        const message = document.getElementById('message');
-        message.innerHTML = '<span style="color:#ff0000">VINCIT QUI SE VINCIT</span><br><span style="color:#ffff00">YOU HAVE BEEN HACKED</span>';
+        // Message
+        const messages = [
+            "YOU ARE STUPID",
+            "YOU ARE AN IDIOT",
+            "YOU ARE USELESS",
+            "YOU ARE A FAILURE",
+            "YOU ARE WORTHLESS"
+        ];
 
-        // Logo
-        const logo = document.getElementById('logo');
-        logo.innerHTML = 'XNXX TEAM<br><span style="font-size:16px;">ALZZ CYBER TEAM</span>';
+        setInterval(() => {
+            const msg = messages[Math.floor(Math.random() * messages.length)];
+            document.querySelector('.message').textContent = msg;
+        }, 2000);
     </script>
 </body>
 </html>
